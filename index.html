@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Секретное досье</title>
+<style>
+body { margin:0; font-family:Georgia,serif; background:#1f2d1f; color:#e8e6d9; text-align:center; }
+.container { padding:40px 20px; }
+.dossier { background:#2f3e2f; max-width:700px; margin:40px auto; padding:40px; border:2px solid #4a5a4a; box-shadow:0 0 25px rgba(0,0,0,0.7); }
+h1 { text-transform:uppercase; letter-spacing:2px; }
+img { max-width:260px; margin:20px 0; border:3px solid #4a5a4a; }
+button { padding:12px 25px; font-size:16px; background:#4a5a4a; color:#fff; border:none; cursor:pointer; margin-top:20px; }
+button:hover { background:#6a7a6a; }
+input { padding:10px; font-size:16px; border:1px solid #4a5a4a; margin-top:15px; }
+.hidden { display:none; }
+.stamp { color:#8b0000; font-size:24px; font-weight:bold; border:3px solid #8b0000; display:inline-block; padding:8px 20px; margin-bottom:20px; transform:rotate(-8deg); }
+.certificate { background:#f4f1e6; color:#2f2f2f; padding:40px; border-radius:6px; max-width:700px; margin:40px auto; position:relative; box-shadow:0 10px 30px rgba(0,0,0,0.6), inset 0 0 60px rgba(0,0,0,0.1); }
+.certificate::before { content:""; position:absolute; inset:0; background:radial-gradient(circle at top left, rgba(0,0,0,0.08), transparent 60%), radial-gradient(circle at bottom right, rgba(0,0,0,0.08), transparent 60%); pointer-events:none; }
+.heart { position:fixed; bottom:-20px; font-size:20px; animation:floatUp 6s linear infinite; color:#c2185b; }
+@keyframes floatUp { from { transform:translateY(0); opacity:1; } to { transform:translateY(-800px); opacity:0; } }
+</style>
+</head>
+<body>
+
+<div class="container dossier" id="stage1">
+<div class="stamp">СОВЕРШЕННО СЕКРЕТНО</div>
+<h1>Досье № 23-02</h1>
+<p>В этот день 23 февраля разыскивается самый лучший мужчина в мире…</p>
+<img src="husband.jpg" alt="Фото">
+<p>Если дело заведено на тебя — немедленно открой его.</p>
+<button onclick="openCase()">Открыть досье</button>
+</div>
+
+<div class="container dossier hidden" id="stage2">
+<h1>Доступ ограничен</h1>
+<p>Секретный код можно получить у своей жены, сделав ей комплимент.</p>
+<input type="password" id="codeInput" placeholder="Введите код">
+<br>
+<button onclick="checkCode()">Подтвердить</button>
+</div>
+
+<div class="hidden" id="stage3">
+<div class="certificate">
+<img src="certificate.jpg" alt="Сертификат" style="max-width:300px;">
+<h1>С 23 февраля, мужчина моей мечты! 💪</h1>
+
+<p>
+Ты тот, кто всегда спокоен, наводит порядок в хаосе, терпит мои всплески,
+решает мои сложные задачи и при этом умудряется оставаться адекватным
+и с чувством юмора.
+</p>
+
+<p>
+Настоящим сертификатом тебе официально разрешается прикупить возможность
+видеть меня ещё лучше…  
+или, наоборот, сделать так, чтобы моя красота не ослепляла тебя слишком сильно 😉
+</p>
+
+<p><strong>С тобой можно всё. Люблю тебя бесконечно! ❤️</strong></p>
+</div>
+</div>
+
+<script>
+function openCase() {
+document.getElementById("stage1").classList.add("hidden");
+document.getElementById("stage2").classList.remove("hidden");
+}
+
+function checkCode() {
+const correctCode = "LOVE";
+const userCode = document.getElementById("codeInput").value;
+if (userCode === correctCode) {
+document.getElementById("stage2").classList.add("hidden");
+document.getElementById("stage3").classList.remove("hidden");
+startHearts();
+} else {
+alert("Неверный код. Доступ запрещён.");
+}
+}
+
+function startHearts() {
+setInterval(() => {
+const heart = document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML = "❤";
+heart.style.left = Math.random() * window.innerWidth + "px";
+heart.style.fontSize = (15 + Math.random() * 20) + "px";
+heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+document.body.appendChild(heart);
+setTimeout(() => { heart.remove(); }, 7000);
+}, 500);
+}
+</script>
+
+</body>
+</html>
